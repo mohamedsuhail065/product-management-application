@@ -1,0 +1,22 @@
+.actionBar {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.actionBtn {
+  background-color: #e8b03e;
+  border: none;
+  border-radius: 25px;
+  padding: 0.6rem 1.5rem;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.actionBtn:hover {
+  background-color: #d19b22;
+}

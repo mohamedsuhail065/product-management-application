@@ -1,0 +1,67 @@
+.sidebar {
+  width: 220px;
+  min-width: 160px;
+  background: #fff;
+  padding: 2rem 1.5rem 1.5rem 2rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px #eaeaea44;
+  height: fit-content;
+}
+
+.header {
+  font-weight: bold;
+  color: #14517a;
+  font-size: 1.15rem;
+  margin-bottom: 1.2rem;
+}
+
+.categoryList,
+.subcategoryList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.categoryItem {
+  cursor: pointer;
+  padding: 7px 0;
+  color: #595f6a;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.categoryItem.active,
+.categoryItem:hover {
+  color: #0a2744;
+}
+
+.categoryGroup {
+  margin-bottom: 0.7rem;
+}
+
+.subcategoryList {
+  margin-left: 1.1rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.1rem;
+}
+
+.subcategoryItem {
+  margin-bottom: 0.34rem;
+}
+
+.filterLabel {
+  font-size: 1rem;
+  color: #858585;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  accent-color: #ffc947;
+  width: 1.06rem;
+  height: 1.06rem;
+  margin-right: 0.6rem;
+  vertical-align: middle;
+}

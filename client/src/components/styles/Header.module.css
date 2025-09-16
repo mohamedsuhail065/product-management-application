@@ -1,0 +1,44 @@
+.container {
+  background: #003f62;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search {
+  background: white;
+  border-radius: 20px;
+  margin-left: 16px;
+}
+
+.search input {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  outline: none;
+}
+
+.search button {
+  background: #eda415;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.rightPane {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-right: 16px;
+}
+
+.profile{
+    display: flex;
+    align-items: center;
+}
+
+.profile span{
+    color: white;
+    font-weight: 500;
+    margin-right: 8px;
+}

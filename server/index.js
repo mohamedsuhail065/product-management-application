@@ -7,7 +7,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 const mongoose = require("mongoose");
 const userRouter = require("./routes/userRoutes");
+const productRouter = require("./routes/productRoutes");
+const categoryRouter = require("./routes/categoryRoutes");
 app.use("/api/users", userRouter);
+app.use("/api/categories", categoryRouter);
+app.use("/api/product", productRouter);
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
