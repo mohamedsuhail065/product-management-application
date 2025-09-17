@@ -5,11 +5,21 @@ import Sidebar from "../components/Sidebar";
 import styles from "./styles/Home.module.css";
 import ProductGrid from "../components/ProductGrid";
 import axios from "axios";
+import Pagination from "../components/Pagination";
 
 const Home = () => {
   const [prod, setProd] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [wishlistOpen, setWishlistOpen] = useState(false);
+  const [filteredCategory, setFilteredCategory] = useState(null);
+  const [filteredSubcategories, setFilteredSubcategories] = useState([]);
+  const [searchedProducts, setSearchedProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  // slice your products array for current page
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -50,7 +60,6 @@ const Home = () => {
       }
     );
 
-    // Update wishlist and products accordingly
     const { data: updatedWishlist } = await axios.get(
       "http://localhost:5000/api/product/wishlist",
       {
@@ -58,13 +67,50 @@ const Home = () => {
       }
     );
     setWishlist(updatedWishlist);
-
-    // Optionally refresh all products or update products state locally
     const { data: allProducts } = await axios.get(
       "http://localhost:5000/api/product"
     );
     setProd(allProducts);
   };
+  const handleSearch = async (query) => {
+    setSearchQuery(query);
+    if (!query) {
+      setSearchedProducts([]);
+      return;
+    }
+    try {
+      const response = await axios.get("http://localhost:5000/api/product", {
+        params: { q: query },
+      });
+      setSearchedProducts(response.data);
+    } catch (error) {
+      console.error("Error searching products:", error);
+    }
+  };
+  const handleFilterChange = (categoryId, subcatIds) => {
+    setFilteredCategory(categoryId);
+    setFilteredSubcategories(subcatIds);
+  };
+
+  const baseProductList = searchQuery ? searchedProducts : prod;
+
+  const filteredProducts = baseProductList.filter((product) => {
+    if (filteredCategory && product.category !== filteredCategory) {
+      return false;
+    }
+    if (
+      filteredSubcategories.length > 0 &&
+      !filteredSubcategories.includes(product.subcategory)
+    ) {
+      return false;
+    }
+    return true;
+  });
+
+    const pagedProducts = filteredProducts.slice(
+    (page - 1) * pageSize,
+    page * pageSize
+  );
 
   return (
     <div className={styles.homeContainer}>
@@ -74,17 +120,24 @@ const Home = () => {
         wishlistOpen={wishlistOpen}
         setWishlistOpen={setWishlistOpen}
         removeFromWishlist={toggleWishlist}
+        onSearch={handleSearch}
       />
       <div className={styles.mainContent}>
-        <Sidebar />
+        <Sidebar onFilterChange={handleFilterChange} />
         <div className={styles.productSection}>
           <ActionBar />
           <ProductGrid
-            products={prod}
+            products={pagedProducts}
             userId={JSON.parse(localStorage.getItem("user"))?._id}
             toggleWishlist={toggleWishlist}
           />
-          {/* <Pagination /> */}
+          <Pagination
+            totalItems={filteredProducts.length}
+            currentPage={page}
+            pageSize={pageSize}
+            onPageChange={setPage}
+            onPageSizeChange={setPageSize}
+          />
         </div>
       </div>
     </div>

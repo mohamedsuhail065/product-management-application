@@ -48,7 +48,6 @@ const ActionBar = () => {
 
   const handleProductSubmit = async (e) => {
     e.preventDefault();
-    // Construct FormData for images
     const formData = new FormData();
     formData.append("title", productTitle);
     formData.append("description", productDescription);
@@ -58,14 +57,12 @@ const ActionBar = () => {
       formData.append(`variants[${idx}]`, JSON.stringify(v))
     );
     productImages.forEach((img) => formData.append("images", img));
-    // Send to backend (adjust endpoint as needed)
     const response = await axios.post(
       "http://localhost:5000/api/product",
       formData,
       { headers: { "Content-Type": "multipart/form-data" } }
     );
     console.log(response.data);
-    // Reset form and close modal
     setProductTitle("");
     setProductDescription("");
     setProductSubCategory("");

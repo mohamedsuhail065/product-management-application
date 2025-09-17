@@ -9,6 +9,7 @@ const {
   updateProduct,
 } = require("../controllers/ProductCtrl");
 const auth = require("../Middleware/auth");
+const Product = require("../models/Product");
 
 const productRouter = express.Router();
 
@@ -29,5 +30,7 @@ productRouter.get("/wishlist", auth, getWishlist);
 productRouter.put("/:id", auth, upload.array("images", 5), updateProduct);
 productRouter.get("/:id", getProductById);
 productRouter.patch("/:id/wishlist",auth,toggleWishlist)
+
+
 
 module.exports = productRouter;

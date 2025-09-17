@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import styles from "./styles/Sidebar.module.css";
 import axios from "axios";
 
-const Sidebar = () => {
+const Sidebar = ({onFilterChange}) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategories, setSelectedSubcategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
-
+ useEffect(() => {
+    onFilterChange(selectedCategory, selectedSubcategories);
+  }, [selectedCategory, selectedSubcategories]);
 
  useEffect(() => {
   const fetchCategories = async () => {
@@ -23,7 +25,7 @@ const Sidebar = () => {
     }
   };
   fetchCategories();
-}, []);  // Only once on mount
+}, []); 
 
 useEffect(() => {
   if (!selectedCategory) {
@@ -40,7 +42,7 @@ useEffect(() => {
     }
   };
   fetchSubCategories();
-}, [selectedCategory]);  // Run when selectedCategory changes
+}, [selectedCategory]); 
 
 
   const handleCategoryClick = (catId) => {

@@ -40,13 +40,17 @@ exports.createProduct = async (req, res) => {
 };
 
 exports.getProducts = async (req, res) => {
+  const { q } = req.query;
+  const filter = q ? { title: { $regex: q, $options: "i" } } : {};
+
   try {
-    const products = await Product.find({});
+    const products = await Product.find(filter);
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: "Server error fetching products" });
   }
 };
+
 
 
 exports.getProductById = async (req, res) => {
