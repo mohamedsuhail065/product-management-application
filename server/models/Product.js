@@ -36,7 +36,13 @@ const productSchema = new mongoose.Schema({
       url: String,
     },
   ],
-  variants: [variantSchema], 
+  variants: [variantSchema],
+  wishlist: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Product", productSchema);

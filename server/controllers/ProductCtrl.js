@@ -39,22 +39,19 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-// Get all products (optionally add filters/pagination)
 exports.getProducts = async (req, res) => {
   try {
-    const products = await Product.find().populate("subcategory").lean();
+    const products = await Product.find({});
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: "Server error fetching products" });
   }
 };
 
-// Get single product by ID
+
 exports.getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id)
-      .populate("subcategory")
-      .lean();
+    const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ message: "Product not found" });
     res.json(product);
   } catch (error) {
@@ -62,4 +59,32 @@ exports.getProductById = async (req, res) => {
   }
 };
 
+
+exports.toggleWishlist = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user.id; 
+  const product = await Product.findById(id);
+  if (!product) return res.status(404).json({ message: "Product not found" });
+
+  const index = product.wishlist.indexOf(userId);
+  if (index === -1) {
+    product.wishlist.push(userId);
+  } else {
+    product.wishlist.splice(index, 1);
+  }
+  await product.save();
+  res.json({ wishlist: product.wishlist });
+};
+
+
+exports.getWishlist = async (req, res) => {
+  const userId = req.user.id;
+  console.log(userId)
+  try {
+    const wishlistedProducts = await Product.find({ wishlist: userId })
+    res.json(wishlistedProducts);
+  } catch (error) {
+    res.status(500).json({ message: "Server error fetching wishlist" });
+  }
+};
 

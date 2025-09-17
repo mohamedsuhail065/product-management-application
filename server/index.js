@@ -12,6 +12,8 @@ const categoryRouter = require("./routes/categoryRoutes");
 app.use("/api/users", userRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/product", productRouter);
+const path = require('path');
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
