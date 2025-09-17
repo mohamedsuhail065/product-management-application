@@ -36,3 +36,26 @@ This repository contains the full stack product management application with a Re
 
 ### Environment
 - Create `.env` in `/server` root:
+
+
+
+### Scripts
+- `npm run dev` - run with nodemon
+- `npm start` - run server
+
+### Routes
+- `POST /api/product` - create product with images
+- `GET /api/product` - list products, supports `?q=search` query param
+- `GET /api/product/:id` - product details
+- `PUT /api/product/:id` - update product and images
+- `PATCH /api/product/:id/wishlist` - toggle wishlist
+- `GET /api/product/wishlist` - get user's wishlist
+- `GET /api/categories` - categories list
+- `GET /api/categories/subcategory/:categoryId` - subcategories list
+
+## Notes
+- Restart dev servers when changing env variables.
+- Keep env secrets safe and do not commit `.env`.
+- Use consistent API URL environment variable referencing in the client.
+
+---
