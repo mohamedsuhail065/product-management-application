@@ -15,7 +15,6 @@ This repository contains the full stack product management application with a Re
 - Requires Node.js (16+)
 - Install dependencies: `cd client && npm install`
 - Run dev server: `npm run dev`
-- Access at http://localhost:5173
 
 ### Environment
 - Create `.env` in `/client` root with:
