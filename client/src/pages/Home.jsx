@@ -17,13 +17,12 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-
-  // slice your products array for current page
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/product");
+        const response = await fetch(`${apiUrl}/api/product`);
         const data = await response.json();
         setProd(data);
         console.log(data);
@@ -39,7 +38,7 @@ const Home = () => {
       const fetchWishlist = async () => {
         const token = localStorage.getItem("token");
         const { data } = await axios.get(
-          "http://localhost:5000/api/product/wishlist",
+          `${apiUrl}/api/product/wishlist`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -53,7 +52,7 @@ const Home = () => {
   const toggleWishlist = async (productId) => {
     const token = localStorage.getItem("token");
     await axios.patch(
-      `http://localhost:5000/api/product/${productId}/wishlist`,
+      `${apiUrl}/api/product/${productId}/wishlist`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -61,14 +60,14 @@ const Home = () => {
     );
 
     const { data: updatedWishlist } = await axios.get(
-      "http://localhost:5000/api/product/wishlist",
+      `${apiUrl}/api/product/wishlist`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
     setWishlist(updatedWishlist);
     const { data: allProducts } = await axios.get(
-      "http://localhost:5000/api/product"
+      `${apiUrl}/api/product`
     );
     setProd(allProducts);
   };
@@ -79,7 +78,7 @@ const Home = () => {
       return;
     }
     try {
-      const response = await axios.get("http://localhost:5000/api/product", {
+      const response = await axios.get(`${apiUrl}/api/product`, {
         params: { q: query },
       });
       setSearchedProducts(response.data);

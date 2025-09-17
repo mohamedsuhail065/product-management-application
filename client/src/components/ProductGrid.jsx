@@ -4,6 +4,7 @@ import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 const ProductGrid = ({ products = [],userId, toggleWishlist }) => {
+  const apiUrl = import.meta.env.VITE_API_URL;
 const handleWishlistClick = (e, id) => {
     e.stopPropagation();
     toggleWishlist(id);
@@ -37,7 +38,7 @@ const handleWishlistClick = (e, id) => {
             <img
               src={
                 product.images && product.images.length > 0
-                  ? `http://localhost:5000/${product.images[0].url.replace(
+                  ? `${apiUrl}/${product.images[0].url.replace(
                       /\\/g,
                       "/"
                     )}`

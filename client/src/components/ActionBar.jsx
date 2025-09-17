@@ -27,7 +27,7 @@ const ActionBar = () => {
   const [productDescription, setProductDescription] = useState("");
   const [productImages, setProductImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const addVariant = () =>
     setVariants([...variants, { ram: "", price: "", qty: 1 }]);
 
@@ -57,11 +57,9 @@ const ActionBar = () => {
       formData.append(`variants[${idx}]`, JSON.stringify(v))
     );
     productImages.forEach((img) => formData.append("images", img));
-    const response = await axios.post(
-      "http://localhost:5000/api/product",
-      formData,
-      { headers: { "Content-Type": "multipart/form-data" } }
-    );
+    const response = await axios.post(`${apiUrl}/api/product`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     console.log(response.data);
     setProductTitle("");
     setProductDescription("");
@@ -75,7 +73,7 @@ const ActionBar = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/categories");
+        const res = await axios.get(`${apiUrl}/api/categories`);
         setCategories(res.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -93,7 +91,7 @@ const ActionBar = () => {
     const fetchSubCategories = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/categories/subcategory/${productCategory}`
+          `${apiUrl}/api/categories/subcategory/${productCategory}`
         );
         setSubcategories(res.data);
       } catch (error) {
@@ -119,7 +117,7 @@ const ActionBar = () => {
   const handleCategory = async (e) => {
     e.preventDefault();
     if (!categoryName.trim()) return;
-    const response = await axios.post("http://localhost:5000/api/categories", {
+    const response = await axios.post(`${apiUrl}/api/categories`, {
       name: categoryName,
     });
     console.log(response.data);
@@ -128,13 +126,10 @@ const ActionBar = () => {
   const handleSubCategory = async (e) => {
     e.preventDefault();
     if (!subCategoryName.trim()) return;
-    const response = await axios.post(
-      "http://localhost:5000/api/categories/subcategory",
-      {
-        name: subCategoryName,
-        categoryId: selectedCategory || categories[0]?._id,
-      }
-    );
+    const response = await axios.post(`${apiUrl}/api/categories/subcategory`, {
+      name: subCategoryName,
+      categoryId: selectedCategory || categories[0]?._id,
+    });
     console.log(response.data);
     closeSubCategoryModal();
   };

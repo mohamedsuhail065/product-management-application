@@ -17,7 +17,6 @@ const Pagination = ({
   const totalPages = Math.ceil(totalItems / pageSize);
   const maxPagesToShow = 5;
 
-  // Calculate visible page numbers (simple logic with ellipsis)
   let pages = [];
   if (totalPages <= maxPagesToShow) {
     pages = range(1, totalPages);

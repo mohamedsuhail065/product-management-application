@@ -5,9 +5,8 @@ import axios from "axios";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import Modal from "../components/Modal";
 
-const API_URL = "http://localhost:5000";
-
 const ProductDetails = () => {
+    const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -31,7 +30,7 @@ const ProductDetails = () => {
     if (!id) return;
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`${API_URL}/api/product/${id}`);
+        const response = await axios.get(`${apiUrl}/api/product/${id}`);
         setProduct(response.data);
       } catch (error) {
         console.error(error);
@@ -45,7 +44,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get(`${API_URL}/api/categories`);
+        const res = await axios.get(`${apiUrl}/api/categories`);
         setCategories(res.data);
       } catch (error) {
         console.error(error);
@@ -63,7 +62,7 @@ const ProductDetails = () => {
     const fetchSubCategories = async () => {
       try {
         const res = await axios.get(
-          `${API_URL}/api/categories/subcategory/${productCategory}`
+          `${apiUrl}/api/categories/subcategory/${productCategory}`
         );
         setSubcategories(res.data);
       } catch (error) {
@@ -78,7 +77,7 @@ const ProductDetails = () => {
     const token = localStorage.getItem("token");
     try {
       const { data } = await axios.patch(
-        `${API_URL}/api/product/${productId}/wishlist`,
+        `${apiUrl}/api/product/${productId}/wishlist`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -105,7 +104,7 @@ const ProductDetails = () => {
         ? product.images.map((img) =>
             img.url.startsWith("http")
               ? img.url
-              : `${API_URL}/${img.url.replace(/\\/g, "/")}`
+              : `${apiUrl}/${img.url.replace(/\\/g, "/")}`
           )
         : []
     );
@@ -145,7 +144,7 @@ const ProductDetails = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `${API_URL}/api/product/${product._id}`,
+        `${apiUrl}/api/product/${product._id}`,
         formData,
         {
           headers: {
@@ -171,7 +170,7 @@ const ProductDetails = () => {
   const imgSrc = (img) =>
     img.url?.startsWith("http")
       ? img.url
-      : `${API_URL}/${img.url.replace(/\\/g, "/")}`;
+      : `${apiUrl}/${img.url.replace(/\\/g, "/")}`;
 
   const inputStyle = {
     width: "100%",

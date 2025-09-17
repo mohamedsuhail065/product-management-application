@@ -3,6 +3,7 @@ import styles from "./styles/Sidebar.module.css";
 import axios from "axios";
 
 const Sidebar = ({onFilterChange}) => {
+    const apiUrl = import.meta.env.VITE_API_URL;
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -15,7 +16,7 @@ const Sidebar = ({onFilterChange}) => {
  useEffect(() => {
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/categories");
+      const res = await axios.get(`${apiUrl}/api/categories`);
       setCategories(res.data);
       setLoading(false);
     } catch (error) {
@@ -34,7 +35,7 @@ useEffect(() => {
   }
   const fetchSubCategories = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/categories/subcategory/${selectedCategory}`);
+      const res = await axios.get(`${apiUrl}/api/categories/subcategory/${selectedCategory}`);
       setSubcategories(res.data);
     } catch (error) {
       setSubcategories([]);       

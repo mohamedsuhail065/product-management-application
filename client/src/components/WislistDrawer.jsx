@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./styles/WishlistDrawer.module.css";
 import { IoIosHeartEmpty } from "react-icons/io";
 
-const API_URL = "http://localhost:5000";
+  const apiUrl = import.meta.env.VITE_API_URL;
 
 const WishlistDrawer = ({ isOpen, onClose, wishlist, onRemove }) => (
   <div className={`${styles.drawer} ${isOpen ? styles.open : ""}`}>
@@ -22,7 +22,7 @@ const WishlistDrawer = ({ isOpen, onClose, wishlist, onRemove }) => (
             <img
               src={
                 product.images?.[0]
-                  ? `${API_URL}/${product.images[0].url.replace(/\\/g, "/")}`
+                  ? `${apiUrl}/${product.images[0].url.replace(/\\/g, "/")}`
                   : "https://via.placeholder.com/80x60?text=No+Image"
               }
               alt={product.title}

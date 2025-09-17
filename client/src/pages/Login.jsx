@@ -9,7 +9,7 @@ import { IoLockClosedOutline } from "react-icons/io5";
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const initialValues = {
     email: "",
     password: "",
@@ -23,12 +23,11 @@ const Login = () => {
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/login",
+        `${apiUrl}/api/users/login`,
         values
       );
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data));
-
       navigate("/home");
     } catch (error) {
       if (error.response && error.response.data.message) {

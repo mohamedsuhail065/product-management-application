@@ -10,7 +10,7 @@ import { FiUser } from "react-icons/fi";
 
 const Register = () => {
   const navigate = useNavigate();
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const initialValues = {
     name: "",
     email: "",
@@ -30,7 +30,7 @@ const Register = () => {
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const { name, email, password } = values;
-      await axios.post("http://localhost:5000/api/users/register", {
+      await axios.post(`${apiUrl}/api/users/register`, {
         name,
         email,
         password,
