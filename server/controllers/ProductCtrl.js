@@ -59,6 +59,38 @@ exports.getProductById = async (req, res) => {
   }
 };
 
+exports.updateProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const { title, description, category, subcategory, variants } = req.body;
+
+    let parsedVariants = [];
+    if (variants) {
+      parsedVariants = Array.isArray(variants)
+        ? variants.map(v => typeof v === "string" ? JSON.parse(v) : v)
+        : [JSON.parse(variants)];
+    }
+
+    const images = req.files ? req.files.map(file => ({ url: file.path || file.filename })) : [];
+
+    const product = await Product.findById(productId);
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    product.title = title;
+    product.description = description;
+    product.category = category;
+    product.subcategory = subcategory;
+    product.variants = parsedVariants;
+    if (images.length) product.images = images; 
+
+    await product.save();
+    res.json(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error updating product" });
+  }
+};
+
 
 exports.toggleWishlist = async (req, res) => {
   const { id } = req.params;
