@@ -54,8 +54,6 @@ This repository contains the full stack product management application with a Re
 - `GET /api/categories/subcategory/:categoryId` - subcategories list
 
 ## Notes
-- Restart dev servers when changing env variables.
-- Keep env secrets safe and do not commit `.env`.
-- Use consistent API URL environment variable referencing in the client.
+- Please create an uploads folder, locally if there is no uploads folder is present in the server root.
 
 ---
