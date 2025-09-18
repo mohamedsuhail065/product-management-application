@@ -154,6 +154,7 @@ const ProductDetails = () => {
         }
       );
       setProduct(response.data);
+      alert('Product updated successfully')
       setProductOpen(false);
     } catch (error) {
       console.error("Error saving product:", error);

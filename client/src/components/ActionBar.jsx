@@ -67,6 +67,7 @@ const ActionBar = () => {
     setVariants([{ ram: "", price: "", qty: 1 }]);
     setProductImages([]);
     setImagePreviews([]);
+    alert("Product added successfully");
     setProductOpen(false);
   };
 
@@ -121,6 +122,7 @@ const ActionBar = () => {
       name: categoryName,
     });
     console.log(response.data);
+    alert("Category created successfully");
     closeModal();
   };
   const handleSubCategory = async (e) => {
@@ -131,6 +133,7 @@ const ActionBar = () => {
       categoryId: selectedCategory || categories[0]?._id,
     });
     console.log(response.data);
+    alert("Subcategory created successfully");
     closeSubCategoryModal();
   };
   return (

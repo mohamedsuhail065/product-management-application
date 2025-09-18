@@ -35,6 +35,7 @@ const Register = () => {
         email,
         password,
       });
+      alert('Registered Successfully')
       navigate("/");
     } catch (error) {
       if (error.response && error.response.data.message) {
